@@ -364,3 +364,7 @@ FodyWeavers.xsd
 /TestProject1/TestProject1.csproj
 /TestProject1
 /SmartEvent.sln
+/Tests/Tests.csproj
+/Tests/Tests.csproj
+/Tests/UnitTest1.cs
+/SmartEvent.sln
