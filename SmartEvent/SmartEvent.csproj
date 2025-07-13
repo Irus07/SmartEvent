@@ -4,6 +4,10 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	  <PackageId>SmartEvent</PackageId>
+	  <Version>1.0.0</Version>
+	  <Authors>Irus</Authors>
+	  <RepositoryUrl>https://github.com/Irus07/SmartEvent</RepositoryUrl>
   </PropertyGroup>
 
 </Project>

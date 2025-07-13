@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using SmartEvent.Interfaces;
 
-namespace SmartEvent.Classes
+namespace SmartEvent
 {
     public partial class SmartEvent<TDelegate> :ISmartEvent<TDelegate>
 		where TDelegate : Delegate
@@ -126,6 +126,14 @@ namespace SmartEvent.Classes
 				item.@delegate.DynamicInvoke(TDelegateParameters);
 		}
 
+		public void ParalelInvoke(params object[]? TDelegateParameters)
+		{
+			var rez =
+				from t in _sortedDelegate.AsParallel()
+				select t.@delegate.DynamicInvoke(TDelegateParameters);
+				
+		}
+
 
 		public void Pin(TDelegate @delegate)
 		{
@@ -136,6 +144,8 @@ namespace SmartEvent.Classes
 				1
 				));
 		}
+
+
 
 		public static SmartEvent<TDelegate> operator +(SmartEvent<TDelegate> smartEvent, TDelegate @delegate)
 		{
