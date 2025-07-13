@@ -78,6 +78,5 @@ namespace SmartEvent
 			smartEvent.Unsubscribe(@delegate);
 			return smartEvent;
 		}
-
 	}
 }
