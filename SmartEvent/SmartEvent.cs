@@ -1,28 +1,23 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using SmartEvent.Interfaces;
 
+
 namespace SmartEvent
 {
-    public partial class SmartEvent<TDelegate> :ISmartEvent<TDelegate>
+	public partial class SmartEvent<TDelegate> : ISmartEvent<TDelegate>
 		where TDelegate : Delegate
 	{
-		#region Constructors
-		public SmartEvent(params TDelegate[] delegates)
-		{
 
-		}
-		public SmartEvent()
-		{
-
-		}
-		#endregion
-
-		private List<Type> _sortedDelegate = new List<Type>();
-		private List<Type> _delegate = new List<Type>();
-		private List<Type> _pinned = new List<Type>();
+		private List<EventHandlerType> _sortedDelegate = new List<EventHandlerType>();
+		private List<EventHandlerType> _delegate = new List<EventHandlerType>();
+		private List<EventHandlerType> _pinned = new List<EventHandlerType>();
 		private Dictionary<TDelegate, int> _InvokeMultiple = new Dictionary<TDelegate, int>();
 		private int _count = 0;
+
+		private readonly HandlerRegistry<TDelegate> _handlerRegistry = new HandlerRegistry<TDelegate>();
+
 
 
 		/// <summary>
@@ -42,7 +37,7 @@ namespace SmartEvent
 		{
 
 			_delegate.Add(
-				new Type(
+				new EventHandlerType(
 					@delegate,
 					@delegate.GetMethodInfo().GetHashCode(),
 					_count,
@@ -83,8 +78,8 @@ namespace SmartEvent
 		/// </summary>
 		public void UnsubscribeAll()
 		{
-			_sortedDelegate = new List<Type> { };
-			_delegate = new List<Type>();
+			_sortedDelegate = new List<EventHandlerType> { };
+			_delegate = new List<EventHandlerType>();
 		}
 		/// <summary>
 		/// Adds a handler with a limited number of calls
@@ -105,9 +100,9 @@ namespace SmartEvent
 		public void Invoke(params object[]? TDelegateParameters)
 		{
 
-			foreach( var t in _pinned)
+			foreach (var t in _pinned)
 				t.@delegate.DynamicInvoke(TDelegateParameters);
-			
+
 
 			foreach (var item in _InvokeMultiple)
 			{
@@ -131,13 +126,13 @@ namespace SmartEvent
 			var rez =
 				from t in _sortedDelegate.AsParallel()
 				select t.@delegate.DynamicInvoke(TDelegateParameters);
-				
+
 		}
 
 
 		public void Pin(TDelegate @delegate)
 		{
-			_pinned.Add(new Type(
+			_pinned.Add(new EventHandlerType(
 				@delegate,
 				@delegate.GetHashCode(),
 				1,

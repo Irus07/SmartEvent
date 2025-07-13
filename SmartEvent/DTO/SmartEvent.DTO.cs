@@ -2,7 +2,7 @@
 {
 	public partial class SmartEvent<TDelegate>
 	{
-		private record class Type(TDelegate @delegate, int hashCode, int index, ushort priority)
+		internal record class EventHandlerType(TDelegate @delegate, int hashCode, int index, ushort priority)
 		{
 		}
 	}
