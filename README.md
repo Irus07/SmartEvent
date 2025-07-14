@@ -2,7 +2,7 @@
 
 The installation is performed via the CLI with the command :
 ```PowerShell
-dotnet add package SmartEvent --version 1.0.0
+dotnet add package SmartEvent --version 1.0.1
 ```
 The SmartEvent library provides advanced functionality compared to the basic C# events.
 
