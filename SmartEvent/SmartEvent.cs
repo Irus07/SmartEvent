@@ -11,8 +11,8 @@ namespace SmartEvent
 		where TDelegate : Delegate
 	{
 
-		private readonly HandlerRegistryService<TDelegate> _handlerRegistry = new();
-		private readonly LimitedCallService<TDelegate> _limitedCall = new();
+		private readonly IHandlerCollection<TDelegate> _handlerRegistry = new HandlerRegistryService<TDelegate>();
+		private readonly IHandlerCollection<TDelegate> _limitedCall = new LimitedCallService<TDelegate>();
 
 		/// <summary>
 		/// Subscribes a method to an event indicating the priority of the call
